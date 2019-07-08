@@ -272,12 +272,12 @@ const ecmascript6 = [
   'yield-star-spacing',
 ];
 
-module.exports = [].concat(
-  possibleErrors,
-  bestPractices,
-  strict,
-  variables,
-  node,
-  stylisticIssues,
-  ecmascript6
-);
+module.exports = [
+  ...possibleErrors,
+  ...bestPractices,
+  ...strict,
+  ...variables,
+  ...node,
+  ...stylisticIssues,
+  ...ecmascript6,
+];

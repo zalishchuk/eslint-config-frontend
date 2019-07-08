@@ -1,0 +1,22 @@
+module.exports = {
+  'import/first': 'error',
+  'import/exports-last': 'off',
+  'import/no-duplicates': 'error',
+  'import/no-namespace': 'off',
+  'import/extensions': [
+    3,
+    'ignorePackages',
+    { js: 'never', mjs: 'never', jsx: 'never' },
+  ],
+  'import/order': 0,
+  'import/newline-after-import': 'error',
+  'import/prefer-default-export': 0,
+  'import/max-dependencies': 'off',
+  'import/no-unassigned-import': 'off',
+  'import/no-named-default': 'error',
+  'import/no-default-export': 'off',
+  'import/no-named-export': 'off',
+  'import/no-anonymous-default-export': 'off',
+  'import/group-exports': 'off',
+  'import/dynamic-import-chunkname': 0,
+};

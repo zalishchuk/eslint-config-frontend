@@ -1,11 +1,34 @@
 const chalk = require('chalk');
 const rules = require('./rules');
-const rulesEslint = require('./data/eslint');
-const rulesPrettier = require('./data/prettier');
-const rulesDeprecated = require('./data/eslint-deprecated');
-const rulesRemoved = require('./data/eslint-removed');
+const rulesListEslint = require('./data/eslint');
+const rulesListPrettier = require('./data/plugin-prettier');
+const rulesListImport = require('./data/plugin-import');
+const rulesListDeprecated = require('./data/eslint-deprecated');
+const rulesListRemoved = require('./data/eslint-removed');
 
-const formatDocsLink = rule => `https://eslint.org/docs/rules/${rule}`;
+const rulesList = Object.keys(rules);
+
+const formatDocsLink = rule => {
+  if (rule.startsWith('import/')) {
+    const ruleName = rule.replace('import/', '');
+    return `https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/${ruleName}.md`;
+  }
+
+  return `https://eslint.org/docs/rules/${rule}`;
+};
+
+const formatRulesList = rules =>
+  rules
+    .map(rule => chalk`- ${rule} ({blue.bold ${formatDocsLink(rule)}})`)
+    .join('\n    ');
+
+const filterValid = rules =>
+  rules.filter(rule => {
+    const isDeprecated = rulesListDeprecated.includes(rule);
+    const isRemoved = rulesListRemoved.includes(rule);
+
+    return !(isDeprecated || isRemoved);
+  });
 
 const filterUnconfirmed = rules =>
   Object.keys(rules).filter(rule => {
@@ -14,30 +37,31 @@ const filterUnconfirmed = rules =>
     return typeof value === 'number';
   });
 
-const filterUsed = rules =>
-  rules.filter(rule => {
-    const isDeprecated = rulesDeprecated.includes(rule);
-    const isRemoved = rulesRemoved.includes(rule);
+const filterUnused = rules =>
+  [...rulesListEslint, ...rulesListImport]
+    .filter(rule => !rulesListPrettier.includes(rule))
+    .filter(rule => typeof rules[rule] === 'undefined');
 
-    return !(isDeprecated || isRemoved);
-  });
-
-const countEslint = filterUsed(rulesEslint).length;
+const count = filterValid([...rulesListEslint, ...rulesListImport]).length;
+const countConfig = filterValid([...rulesList, ...rulesListPrettier]).length;
 const countUnconfirmed = filterUnconfirmed(rules).length;
-const count =
-  filterUsed(Object.keys(rules)).length + filterUsed(rulesPrettier).length;
+const countUnused = filterUnused(rules).length;
 const countCoverage = Math.floor(
-  ((count - countUnconfirmed) / countEslint) * 100
+  ((countConfig - countUnconfirmed) / count) * 100
 );
-const listUnconfirmed = filterUnconfirmed(rules)
-  .map(rule => chalk`- ${rule} ({blue.bold ${formatDocsLink(rule)}})`)
-  .join('\n    ');
+
+const listUnconfirmed = formatRulesList(filterUnconfirmed(rules));
+const listUnused = formatRulesList(filterUnused(rules));
 
 console.log(chalk`
-  {white.bold Config rules count} - {green.bold ${count}}
-  {white.bold ESLint rules count} - {green.bold ${countEslint}}
+  {white.bold ESLint rules count} - {green.bold ${count}}
+  {white.bold Config rules count} - {green.bold ${countConfig}}
 
-  {white.bold Rules coverage} - {yellow.bold ${countCoverage}%}
+  {white.bold Rules coverage} - {cyan.bold ${countCoverage}%}
+  
+  {white.bold Unused rules count - {red.bold ${countUnused}}}
+    ${listUnused}
+
   {white.bold Unconfirmed rules count} - {red.bold ${countUnconfirmed}}
     ${listUnconfirmed}
 `);
