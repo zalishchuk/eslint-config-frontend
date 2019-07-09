@@ -1,8 +1,10 @@
 const chalk = require('chalk');
 const rules = require('./rules');
 const rulesListEslint = require('./data/eslint');
-const rulesListPrettier = require('./data/plugin-prettier');
 const rulesListImport = require('./data/plugin-import');
+const rulesListReact = require('./data/plugin-react');
+const rulesListPrettier = require('./data/plugin-prettier');
+const rulesListPrettierReact = require('./data/plugin-prettier-react');
 const rulesListDeprecated = require('./data/eslint-deprecated');
 const rulesListRemoved = require('./data/eslint-removed');
 
@@ -12,6 +14,11 @@ const formatDocsLink = rule => {
   if (rule.startsWith('import/')) {
     const ruleName = rule.replace('import/', '');
     return `https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/${ruleName}.md`;
+  }
+
+  if (rule.startsWith('react/')) {
+    const ruleName = rule.replace('react/', '');
+    return `https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/${ruleName}.md`;
   }
 
   return `https://eslint.org/docs/rules/${rule}`;
@@ -38,12 +45,23 @@ const filterUnconfirmed = rules =>
   });
 
 const filterUnused = rules =>
-  [...rulesListEslint, ...rulesListImport]
+  [...rulesListEslint, ...rulesListImport, ...rulesListReact]
     .filter(rule => !rulesListPrettier.includes(rule))
+    .filter(rule => !rulesListPrettierReact.includes(rule))
     .filter(rule => typeof rules[rule] === 'undefined');
 
-const count = filterValid([...rulesListEslint, ...rulesListImport]).length;
-const countConfig = filterValid([...rulesList, ...rulesListPrettier]).length;
+const count = filterValid([
+  ...rulesListEslint,
+  ...rulesListImport,
+  ...rulesListReact,
+]).length;
+
+const countConfig = filterValid([
+  ...rulesList,
+  ...rulesListPrettier,
+  ...rulesListPrettierReact,
+]).length;
+
 const countUnconfirmed = filterUnconfirmed(rules).length;
 const countUnused = filterUnused(rules).length;
 const countCoverage = Math.floor(

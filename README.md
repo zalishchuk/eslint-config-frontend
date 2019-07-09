@@ -5,7 +5,7 @@
 ## Todo:
 
 - [x] :warning: Встроенные правила
-- [ ] Правила для [`eslint-plugin-react`](https://github.com/yannickcr/eslint-plugin-react)
+- [x] :warning: Правила для [`eslint-plugin-react`](https://github.com/yannickcr/eslint-plugin-react)
 - [x] :warning: Правила для [`eslint-plugin-import`](https://github.com/benmosher/eslint-plugin-import)
 - [ ] Добавить в конфигурацию [`eslint-plugin-react-hooks`](https://www.npmjs.com/package/eslint-plugin-react-hooks)
 
