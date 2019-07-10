@@ -1,4 +1,4 @@
-const possibleErrors = [
+module.exports = [
   'for-direction',
   'getter-return',
   'no-async-promise-executor',
@@ -35,9 +35,6 @@ const possibleErrors = [
   'require-atomic-updates',
   'use-isnan',
   'valid-typeof',
-];
-
-const bestPractices = [
   'accessor-pairs',
   'array-callback-return',
   'block-scoped-var',
@@ -112,11 +109,7 @@ const bestPractices = [
   'vars-on-top',
   'wrap-iife',
   'yoda',
-];
-
-const strict = ['strict'];
-
-const variables = [
+  'strict',
   'init-declarations',
   'no-delete-var',
   'no-label-var',
@@ -128,9 +121,6 @@ const variables = [
   'no-undefined',
   'no-unused-vars',
   'no-use-before-define',
-];
-
-const node = [
   'callback-return',
   'global-require',
   'handle-callback-err',
@@ -142,9 +132,6 @@ const node = [
   'no-process-exit',
   'no-restricted-modules',
   'no-sync',
-];
-
-const stylisticIssues = [
   'array-bracket-newline',
   'array-bracket-spacing',
   'array-element-newline',
@@ -236,9 +223,6 @@ const stylisticIssues = [
   'template-tag-spacing',
   'unicode-bom',
   'wrap-regex',
-];
-
-const ecmascript6 = [
   'arrow-body-style',
   'arrow-parens',
   'arrow-spacing',
@@ -270,14 +254,4 @@ const ecmascript6 = [
   'symbol-description',
   'template-curly-spacing',
   'yield-star-spacing',
-];
-
-module.exports = [
-  ...possibleErrors,
-  ...bestPractices,
-  ...strict,
-  ...variables,
-  ...node,
-  ...stylisticIssues,
-  ...ecmascript6,
 ];

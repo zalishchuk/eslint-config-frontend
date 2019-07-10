@@ -1,13 +1,17 @@
 const chalk = require('chalk');
-const rules = require('./rules');
+const rulesEslint = require('./rules/eslint').rules;
+const rulesImport = require('./rules/plugin-import').rules;
+const rulesReact = require('./rules/plugin-react').rules;
 const rulesListEslint = require('./data/eslint');
 const rulesListImport = require('./data/plugin-import');
 const rulesListReact = require('./data/plugin-react');
+const rulesListReactHooks = require('./data/plugin-react-hooks');
 const rulesListPrettier = require('./data/plugin-prettier');
 const rulesListPrettierReact = require('./data/plugin-prettier-react');
 const rulesListDeprecated = require('./data/eslint-deprecated');
 const rulesListRemoved = require('./data/eslint-removed');
 
+const rules = { ...rulesEslint, ...rulesImport, ...rulesReact };
 const rulesList = Object.keys(rules);
 
 const formatDocsLink = rule => {
@@ -45,7 +49,12 @@ const filterUnconfirmed = rules =>
   });
 
 const filterUnused = rules =>
-  [...rulesListEslint, ...rulesListImport, ...rulesListReact]
+  [
+    ...rulesListEslint,
+    ...rulesListImport,
+    ...rulesListReact,
+    ...rulesListReactHooks,
+  ]
     .filter(rule => !rulesListPrettier.includes(rule))
     .filter(rule => !rulesListPrettierReact.includes(rule))
     .filter(rule => typeof rules[rule] === 'undefined');
@@ -54,6 +63,7 @@ const count = filterValid([
   ...rulesListEslint,
   ...rulesListImport,
   ...rulesListReact,
+  ...rulesListReactHooks,
 ]).length;
 
 const countConfig = filterValid([
@@ -83,3 +93,7 @@ console.log(chalk`
   {white.bold Unconfirmed rules count} - {red.bold ${countUnconfirmed}}
     ${listUnconfirmed}
 `);
+
+if (filterUnused(rules).length > 0) {
+  process.exit(1);
+}
