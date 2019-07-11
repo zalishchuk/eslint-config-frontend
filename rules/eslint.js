@@ -135,7 +135,7 @@ module.exports = {
     'no-await-in-loop': 'error',
     'no-compare-neg-zero': 'error',
     'no-cond-assign': ['error', 'always'],
-    'no-console': 'warn',
+    'no-console': [1, { allow: ['error'] }],
     'no-constant-condition': 'warn',
     'no-control-regex': 'error',
     'no-debugger': 'error',

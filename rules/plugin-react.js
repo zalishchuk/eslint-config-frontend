@@ -1,13 +1,8 @@
 module.exports = {
   plugins: ['react', 'react-hooks'],
+  parserOptions: { ecmaFeatures: { jsx: true } },
   settings: {
-    react: {
-      createClass: 'createReactClass',
-      pragma: 'React',
-      version: 'detect',
-      flowVersion: 'detect',
-    },
-    propWrapperFunctions: [],
+    react: { version: 'detect' },
     // TODO: confirm a list of link components alternatives
     linkComponents: [{ name: 'Link', linkAttribute: 'to' }],
   },

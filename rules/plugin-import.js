@@ -1,5 +1,15 @@
 module.exports = {
   plugins: ['import'],
+  settings: {
+    'import/extensions': ['.js', '.mjs', '.jsx', '.json'],
+    'import/resolver': {
+      node: { extensions: ['.js', '.mjs', '.jsx', '.json'] },
+    },
+    'import/ignore': [
+      'node_modules',
+      // '\\.(coffee|scss|css|less|hbs|svg|json)$',
+    ],
+  },
   rules: {
     /**
      * Static analysis
@@ -9,8 +19,8 @@ module.exports = {
 
     'import/no-unresolved': ['error', { commonjs: true }],
     'import/named': 'error',
-    'import/default': 0,
-    'import/namespace': 0,
+    'import/default': 'error',
+    'import/namespace': 2,
     'import/no-restricted-paths': 'off',
     'import/no-absolute-path': 'error',
     'import/no-dynamic-require': 2,
@@ -19,6 +29,7 @@ module.exports = {
     'import/no-self-import': 'error',
     'import/no-cycle': 'error',
     'import/no-useless-path-segments': [2, { noUselessIndex: true }],
+    'import/no-useless-path-segments': 2,
     'import/no-relative-parent-imports': 'off',
     'import/no-unused-modules': 0,
 
