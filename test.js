@@ -2,16 +2,25 @@ const chalk = require('chalk');
 const rulesEslint = require('./rules/eslint').rules;
 const rulesImport = require('./rules/plugin-import').rules;
 const rulesReact = require('./rules/plugin-react').rules;
+const rulesTypescript = require('./rules/plugin-typescript').overrides[0].rules;
 const rulesListEslint = require('./data/eslint');
+const rulesListTypescript = require('./data/plugin-typescript');
 const rulesListImport = require('./data/plugin-import');
 const rulesListReact = require('./data/plugin-react');
 const rulesListReactHooks = require('./data/plugin-react-hooks');
 const rulesListPrettier = require('./data/plugin-prettier');
 const rulesListPrettierReact = require('./data/plugin-prettier-react');
+const rulesListPrettierTypescript = require('./data/plugin-prettier-typescript');
 const rulesListDeprecated = require('./data/eslint-deprecated');
 const rulesListRemoved = require('./data/eslint-removed');
 
-const rules = { ...rulesEslint, ...rulesImport, ...rulesReact };
+const rules = {
+  ...rulesEslint,
+  ...rulesImport,
+  ...rulesReact,
+  ...rulesTypescript,
+};
+
 const rulesList = Object.keys(rules);
 
 const formatDocsLink = rule => {
@@ -23,6 +32,11 @@ const formatDocsLink = rule => {
   if (rule.startsWith('react/')) {
     const ruleName = rule.replace('react/', '');
     return `https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/${ruleName}.md`;
+  }
+
+  if (rule.startsWith('@typescript-eslint/')) {
+    const ruleName = rule.replace('@typescript-eslint/', '');
+    return `https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/${ruleName}.md`;
   }
 
   return `https://eslint.org/docs/rules/${rule}`;
@@ -54,9 +68,11 @@ const filterUnused = rules =>
     ...rulesListImport,
     ...rulesListReact,
     ...rulesListReactHooks,
+    ...rulesListTypescript,
   ]
     .filter(rule => !rulesListPrettier.includes(rule))
     .filter(rule => !rulesListPrettierReact.includes(rule))
+    .filter(rule => !rulesListPrettierTypescript.includes(rule))
     .filter(rule => typeof rules[rule] === 'undefined');
 
 const count = filterValid([
@@ -64,12 +80,14 @@ const count = filterValid([
   ...rulesListImport,
   ...rulesListReact,
   ...rulesListReactHooks,
+  ...rulesListTypescript,
 ]).length;
 
 const countConfig = filterValid([
   ...rulesList,
   ...rulesListPrettier,
   ...rulesListPrettierReact,
+  ...rulesListPrettierTypescript,
 ]).length;
 
 const countUnconfirmed = filterUnconfirmed(rules).length;

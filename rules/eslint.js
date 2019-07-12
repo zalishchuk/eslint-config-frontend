@@ -203,7 +203,7 @@ module.exports = {
      * @see https://eslint.org/docs/rules/#stylistic-issues
      */
 
-    camelcase: ['error', { properties: 'never' }],
+    camelcase: [2, { properties: 'never' }],
     'capitalized-comments': 'off',
     'consistent-this': 'off',
     'func-name-matching': 'off',

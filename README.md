@@ -11,5 +11,5 @@
 
 ## Дополнительно:
 
-- [ ] Правила для [`@typescript-eslint/plugin`](https://github.com/typescript-eslint/typescript-eslint)
+- [x] Правила для [`@typescript-eslint/plugin`](https://github.com/typescript-eslint/typescript-eslint)
 - [ ] Правила для [`eslint-plugin-jsx-a11y`](https://github.com/evcohen/eslint-plugin-jsx-a11y)

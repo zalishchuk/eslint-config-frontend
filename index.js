@@ -13,7 +13,7 @@ module.exports = {
   ],
   root: true,
   parserOptions: {
-    ecmaVersion: 2019,
+    ecmaVersion: 2018,
     sourceType: 'module',
   },
   env: {
