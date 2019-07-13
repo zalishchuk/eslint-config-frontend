@@ -1,3 +1,11 @@
+/**
+ * Rules which are commented and duplicated with `0` or `off` value
+ * require type information, so the path to `tsconfig.json` in
+ * `parserOptions.project` needs to be specified.
+ *
+ * This still needs some discussion.
+ */
+
 module.exports = {
   overrides: [
     {
@@ -18,10 +26,10 @@ module.exports = {
          */
 
         'no-undef': 'off',
-        'no-var': 'off',
-        'prefer-const': 'off',
-        'prefer-rest-params': 'off',
-        'no-prototype-builtins': 'off',
+        // 'no-var': 'off',
+        // 'prefer-const': 'off',
+        // 'prefer-rest-params': 'off',
+        // 'no-prototype-builtins': 'off',
         'no-dupe-class-members': 'off',
         'default-case': 'off',
 
